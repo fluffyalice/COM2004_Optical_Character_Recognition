@@ -1,0 +1,30 @@
+# OCR assignment report
+
+## Feature Extraction (Max 200 Words)
+   In both training and testing phases, I use Principal Component Analysis (PCA) algorithm to conduct the feature dimension reduction which is simple but very effective. In PCA, I try different values of reduced dimensions (n = 10, 11, ... 20) and pick 10 most distinguishable features from them by comparing their divergence. Extensive experiments show that best results can be obtained by setting n = 12 and 13. To save the computational time, I have n = 12 in my model settings.
+
+## Classifier (Max 200 Words)
+   OCR is a multi-classification task by nature, I implement two classification models using numpy, i.e., k-Nearest Neighbours (KNN) and Support Vector Machines (SVM). KNN is simple and no training is required. It compares the extracted feature of a test sample with that of all training samples, then uses the majority voting of its top-k similar training sample's labels as the classified label. As the setting of different k has large impact on the classification results, I conduct numerous tests to find a series of appropriate k values for images with different noise levels. k is set to a small value if the background noise is low while k is set to a bigger value when much more noise is artificially added to the test images.
+   SVM is a supervised machine learning model with the aim to find a hyperplane in an N-dimensional space (N features) that distinctly classifies the data points into two or multiple categories. SVM is more complicated and requires training. The training process is very computational expensive which takes several hours for training the training data. The experiments show in small sample dataset, the classification accuracy can achieve around 80%, but for the large OCR dataset, it is hard for the model to get converged. 
+
+## Error Correction (Max 200 Words)
+KNN classifier labels every test sample k most likely labels, say, if a word has a length of m, there are k^m combinations of characters. In error correction, the objective is to find the most probable combination of characters then check whether it is contained in the dictionary. Concretely, I use the Dijkstra algorithm, a popular algorithm to search the shortest path. If the word with the shortest path does not appear in the dictionary, I use the most similar word in the dictionary to replace it. Experiments show it reaches 5%-10% performance gain, especially for high noise images, after the error correction module is equipped.
+
+## Performance
+The percentage errors (to 1 decimal place) using KNN classifier for the development data are as follows:
+- Page 1: score = 97.7% correct
+- Page 2: score = 98.2% correct
+- Page 3: score = 92.0% correct
+- Page 4: score = 77.3% correct
+- Page 5: score = 65.0% correct
+- Page 6: score = 53.0% correct
+
+## Other information (Optional, Max 100 words)
+
+                                         OCR Model Architecture:
+         _________________         __________________         __________________
+        |                 |       |                  |       |                  |
+ Input  |    Dimension    |       |   Multi-Class    |       | Error Correction |        Recognized 
+ =====> |    Reduction    | ====> |  Classification  | ====> |    (Dijkstra     | ====>  Characters
+        |      (PCA)      |       |   (KNN & SVM)    |       |  Shortest Path)  |
+        |_________________|       |__________________|       |__________________|
