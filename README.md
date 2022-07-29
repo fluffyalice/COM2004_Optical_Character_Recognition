@@ -21,10 +21,11 @@ The percentage errors (to 1 decimal place) using KNN classifier for the developm
 
 ## Other information (Optional, Max 100 words)
 
-                                         OCR Model Architecture:
-         _________________         __________________         __________________
-        |                 |       |                  |       |                  |
- Input  |    Dimension    |       |   Multi-Class    |       | Error Correction |        Recognized 
- =====> |    Reduction    | ====> |  Classification  | ====> |    (Dijkstra     | ====>  Characters
-        |      (PCA)      |       |   (KNN & SVM)    |       |  Shortest Path)  |
-        |_________________|       |__________________|       |__________________|
+                                             OCR Model Architecture:
+             _________________         __________________         __________________
+            |                 |       |                  |       |                  |
+     Input  |    Dimension    |       |   Multi-Class    |       | Error Correction |        Recognized 
+     =====> |    Reduction    | ====> |  Classification  | ====> |    (Dijkstra     | ====>  Characters
+            |      (PCA)      |       |   (KNN & SVM)    |       |  Shortest Path)  |
+            |_________________|       |__________________|       |__________________|                                     
+
